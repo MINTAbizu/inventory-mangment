@@ -1,9 +1,9 @@
-const express=require('express')
-const registercontroller=require('../controller/usercontroller')
-const router=express.Router()
+const express = require('express')
+const { userregister, loginuser,logout} = require('../controller/usercontroller')
+const router = express.Router()
 
+router.post('/register', userregister)
+router.post('/login', loginuser)
+router.get('/logout',logout)
 
-router.post('/register', registercontroller)
-
-
-module.exports=router
+module.exports = router
