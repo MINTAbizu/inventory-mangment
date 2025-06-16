@@ -160,6 +160,33 @@ const loggedenstatus =asynchandler(async(req,res)=>{
 // updateuser information
 
 const updateuser =asynchandler(async(req,res)=>{
+
+     const user =await user.findById(req.user._id)
+    if (user) {
+        const { name, email, phone, photo ,bio} = user
+        user.email=email;
+        user.name=req.body.name || name;
+        user.phone=req.body.phone || phone ;
+        user.photo=req.body.photo || photo;
+        user.bio=req.body.bio || bio ;
+ const updatedeuser= await user.save()
+        res.json({
+            nam:updatedeuser.name,
+             _id:updatedeuser._id,
+              email:updatedeuser.email, 
+              phone:updatedeuser.phone,
+               photo:updatedeuser.photo,
+            
+               bio:updatedeuser.bio
+
+        })
+
+
+    }else{
+        res.status(400).json({
+            msg:"user is not found"
+        })
+    }
     res.send('update user')
 
 })
