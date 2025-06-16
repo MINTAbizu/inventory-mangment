@@ -121,8 +121,53 @@ const logout=asynchandler(async(req,res,next)=>{
     res.status(200).json({msg:"successfuly logod out"})
 })
 
+// getuser
+const getuser = asynchandler(async (req, res) => {
+    const user =await user.findById(req.user._id)
+    if (user) {
+        const { name, _id, email, phone, photo } = user
+        return res.status(200).json({
+            name,
+            _id,
+            email,
+            phone,
+            photo,
+            bio
+        })
+    } else {
+        return res.status(400).json({ msg: "User not found" })
+    }
+})
+//loggdenstatus
+const loggedenstatus =asynchandler(async(req,res)=>{
+
+    const token=req.cookies.token
+    if(!token){
+       return res.json(false)
+    }
+    //verfied token
+    const verified = jwt.verify(token, process.env.JWT_SECRET)
+
+    if(verified){
+        return res.json(true)
+
+    }
+       return res.json(false)
+
+})
+
+
+// updateuser information
+
+const updateuser =asynchandler(async(req,res)=>{
+    res.send('update user')
+
+})
 module.exports = {
     userregister,
     loginuser,
-    logout
+    logout,
+    getuser,
+    loggedenstatus,
+    updateuser
 }
