@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt')
 const crypto=require('crypto')
 
 const token=require('../usermodel/tokenmodel')
+const sendEmail = require('../utils/sendEmail')
+// const { Suspense } = require('react')
 // const { use } = require('react')
 // const { json } = require('express')
 
@@ -238,9 +240,42 @@ const forgetpassword = asynchandler(async(req,res,next)=>{
     createHash('sha256')
     .update(reseatetoken)
     .digest('hex')
-    console.log("hashedToken: " + hashedToken)
 
-    res.send('forgetpassword')
+
+    await new token({
+        userId:userexist._id,
+        token:hashedToken,
+        createdAt:Date.now(),
+        expiresAt:Date.now()+ 30 *(60*1000),
+    }).save()
+    console.log("hashedToken: " + hashedToken)
+    
+
+    //COnstruct reseat url
+// =http://localhost:3000
+
+    const reseturl=`${process.env.FRONTEND_URL}/reseatpassword/${reseatetoken}`
+ 
+
+    //message
+
+    const message= `<h1>Hellow ${userexist.name}</h1>
+    <P>please use the url below to reseat your passwor</P>
+    <P>this url is only avilabel for 30m</P>
+    <a href=${reseturl} clicktracking=off>${reseturl}</a>
+    `;
+    const subject='password reseat Request '
+    const send_to=userexist.email
+    const send_from=process.env.EMAIL_USER
+    try {
+        await sendEmail(subject,send_to,send_from,message)
+        res.status(200).json({Success:true,msg:"Reset password email sent successfully"})
+    } catch (error) {
+        res.status(500).json({error:"Error sending reset password email: " + error})
+    }
+    
+    // Remove the unreachable res.send
+    // res.send('forgetpassword')
 })
 
 
