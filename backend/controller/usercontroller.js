@@ -2,6 +2,11 @@ const asynchandler = require('express-async-handler')
 const usermodel = require('../usermodel/usermodel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const crypto=require('crypto')
+
+const token=require('../usermodel/tokenmodel')
+// const { use } = require('react')
+// const { json } = require('express')
 
 //generate token
 const generatetoken = (id) => {
@@ -190,11 +195,86 @@ const updateuser =asynchandler(async(req,res)=>{
     res.send('update user')
 
 })
+
+//changepassword
+const changepassword= asynchandler(async(req,res,next)=>{
+     const user = await usermodel.findById(req.user._id)
+     const {oldpassword,newpassword}=req.body
+     if(!user){
+        return res.status(400).json({msg:"user is not found: Please signup!"})
+     }
+     //validate password
+     if(!oldpassword || !newpassword){
+        return res.status(400).json({msg:"Please enter old password and new password"})
+     }
+     //check if the password is match to db password stored
+     const ispasswordmatch = await bcrypt.compare(oldpassword, user.password)
+
+     if(user && ispasswordmatch){
+        user.password = newpassword
+        await user.save()
+        return res.status(200).json({msg: "Password changed successfully"})
+     }else{
+        return res.status(400).json({msg: "Old password is not correct"})
+     }
+})
+
+//forgetpassword
+const forgetpassword = asynchandler(async(req,res,next)=>{
+    const {email} = req.body;
+
+    const userexist = await usermodel.findOne({email});
+
+    if(!userexist){
+        return res.status(400).json({
+            msg: "user is not existed"
+        });
+    }
+
+    const reseatetoken = crypto.randomBytes(32).toString("hex") + "_" + userexist._id;
+    console.log(reseatetoken);
+    //hashe password before stored to db
+    const hashedToken =crypto.
+    createHash('sha256')
+    .update(reseatetoken)
+    .digest('hex')
+    console.log("hashedToken: " + hashedToken)
+
+    res.send('forgetpassword')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = {
     userregister,
     loginuser,
     logout,
     getuser,
     loggedenstatus,
-    updateuser
+    updateuser,
+    changepassword,
+    forgetpassword
 }
