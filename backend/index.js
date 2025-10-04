@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cookieparser = require('cookie-parser')
 const userroute = require('./route/userroute.js')
-
+const  itemrouter=require('./route/itemroute.js')
+const cors = require('cors')
 // Load environment variables
 dotenv.config()
 
@@ -15,8 +16,17 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieparser())
 
+// CORS configuration
+app.use(cors({
+    origin: 'http://localhost:5173', // Vite's default port
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
+
 // Routes
-app.use("/api/users", userroute)
+app.use("/api/user", userroute)
+app.use("/api/items", itemrouter)
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/inventory')

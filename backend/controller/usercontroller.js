@@ -12,62 +12,108 @@ const sendEmail = require('../utils/sendEmail')
 
 //generate token
 const generatetoken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "1d"})
+    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "30d"})
 }
 
 // Register user
+// const userregister = asynchandler(async (req, res) => {
+//     console.log(req.body);
+//     const {email, password, name} = req.body
+// try {
+//      //validation
+//     if(!email || !password || !name){
+//         return res.status(400).json({msg: "please enter all required information"})
+//     }
+
+//     if(password.length < 6){
+//         return res.status(400).json({msg: "password at least greater than 6 character"})
+//     }
+
+//     // check user existed by email
+//     const userexists = await usermodel.findOne({email})
+
+//     if(userexists){
+//         return res.status(400).json({msg: "email already existed"})
+//     }
+
+//     // create user (password will be hashed by the model's pre-save hook)
+//     const user = await usermodel.create({
+//         name,
+//         email,
+//         password
+//     })
+
+//     const token = generatetoken(user._id)
+//     res.cookie("token", token, {
+//         path: '/',
+//         httpOnly: true,
+//         expires: new Date(Date.now() + 1000 * 86400), //1day
+//         sameSite: 'none',
+//         secure: true
+//     })
+
+//     if(user){
+//         const {name, _id, email, phone, photo} = user
+//         return res.status(201).json({
+//             name,
+//             _id,
+//             email,
+//             phone,
+//             photo,
+//             token
+//         })
+//     } else {
+//         return res.status(400).json({
+//             msg: "invalid user data"
+//         })
+//     }
+    
+// } catch (error) {
+//       console.error("Registration error:", error);
+//     return res.status(500).json({ msg: "Internal server error" });
+    
+// }
+   
+// })
 const userregister = asynchandler(async (req, res) => {
-    const {email, password, name} = req.body
 
-    //validation
-    if(!email || !password || !name){
-        return res.status(400).json({msg: "please enter all required information"})
+    const { email, password, name } = req.body;
+
+    if (!email || !password || !name) {
+        return res.status(400).json({ msg: "Please enter all required information" });
     }
 
-    if(password.length < 6){
-        return res.status(400).json({msg: "password at least greater than 6 character"})
+    if (password.length < 6) {
+        return res.status(400).json({ msg: "Password must be at least 6 characters long" });
     }
 
-    // check user existed by email
-    const userexists = await usermodel.findOne({email})
-
-    if(userexists){
-        return res.status(400).json({msg: "email already existed"})
+    const userexists = await usermodel.findOne({ email });
+    if (userexists) {
+        return res.status(400).json({ msg: "Email already exists" });
     }
 
-    // create user (password will be hashed by the model's pre-save hook)
-    const user = await usermodel.create({
-        name,
-        email,
-        password
-    })
+    try {
+        // const user = await usermodel.create({ name, email, password });
+        const token = generatetoken(userexists);
+        res.cookie("token", token, {
+            path: '/',
+            httpOnly: true,
+            expires: new Date(Date.now() + 1000 * 86400), // 1 day
+            sameSite: 'none',
+            secure: true
+        });
+        
+        // const {  phone, photo } = userexists; // Adjust fields as necessary
+        return res.status(201).json({});
+        
+            // console.log(req.body); // Log the incoming request body
 
-    const token = generatetoken(user._id)
-    res.cookie("token", token, {
-        path: '/',
-        httpOnly: true,
-        expires: new Date(Date.now() + 1000 * 86400), //1day
-        sameSite: 'none',
-        secure: true
-    })
 
-    if(user){
-        const {name, _id, email, phone, photo} = user
-        return res.status(201).json({
-            name,
-            _id,
-            email,
-            phone,
-            photo,
-            token
-        })
-    } else {
-        return res.status(400).json({
-            msg: "invalid user data"
-        })
+    } catch (error) {
+        console.error("Error during user creation:", error);
+        return res.status(500).json({ msg: "Internal server error" });
     }
-})
-
+});
 // Login user
 const loginuser = asynchandler(async (req, res) => {
     const {email, password} = req.body
@@ -85,8 +131,8 @@ const loginuser = asynchandler(async (req, res) => {
         return res.status(400).json({msg: "user is not existed"})
     }
 
-    console.log("Input password:", password)
-    console.log("Stored hashed password:", user.password)
+    // console.log("Input password:", password)
+    // console.log("Stored hashed password:", user.password)
 
     const ispasswordiscorrect = await bcrypt.compare(password, user.password)
     console.log("Password comparison result:", ispasswordiscorrect)
@@ -145,6 +191,7 @@ const getuser = asynchandler(async (req, res) => {
         return res.status(400).json({ msg: "User not found" })
     }
 })
+
 //loggdenstatus
 const loggedenstatus =asynchandler(async(req,res)=>{
 
