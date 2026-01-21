@@ -16,6 +16,55 @@ const generatetoken = (id) => {
 }
 
 // Register user
+
+
+const userregister = asynchandler(async (req, res) => {
+  const { name, email, password } = req.body;
+
+  console.log("REGISTER BODY:", req.body);
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ msg: "All fields are required" });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({ msg: "Password must be at least 6 characters" });
+  }
+
+  const userExists = await usermodel.findOne({ email });
+  if (userExists) {
+    return res.status(400).json({ msg: "Email already exists" });
+  }
+
+  // ✅ CREATE USER
+  const user = await usermodel.create({
+    name,
+    email,
+    password,
+  });
+
+  console.log("USER CREATED:", user._id);
+
+  // ✅ GENERATE TOKEN
+  const token = generatetoken(user._id);
+
+  res.cookie("token", token, {
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",   // IMPORTANT for localhost
+    secure: false,     // IMPORTANT for localhost
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  });
+
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+  });
+});
+
+
+
 // const userregister = asynchandler(async (req, res) => {
 //     console.log(req.body);
 //     const {email, password, name} = req.body
@@ -75,45 +124,45 @@ const generatetoken = (id) => {
 // }
    
 // })
-const userregister = asynchandler(async (req, res) => {
+// const userregister = asynchandler(async (req, res) => {
 
-    const { email, password, name } = req.body;
+//     const { email, password, name } = req.body;
 
-    if (!email || !password || !name) {
-        return res.status(400).json({ msg: "Please enter all required information" });
-    }
+//     if (!email || !password || !name) {
+//         return res.status(400).json({ msg: "Please enter all required information" });
+//     }
 
-    if (password.length < 6) {
-        return res.status(400).json({ msg: "Password must be at least 6 characters long" });
-    }
+//     if (password.length < 6) {
+//         return res.status(400).json({ msg: "Password must be at least 6 characters long" });
+//     }
 
-    const userexists = await usermodel.findOne({ email });
-    if (userexists) {
-        return res.status(400).json({ msg: "Email already exists" });
-    }
+//     const userexists = await usermodel.findOne({ email });
+//     if (userexists) {
+//         return res.status(400).json({ msg: "Email already exists" });
+//     }
 
-    try {
-        // const user = await usermodel.create({ name, email, password });
-        const token = generatetoken(userexists);
-        res.cookie("token", token, {
-            path: '/',
-            httpOnly: true,
-            expires: new Date(Date.now() + 1000 * 86400), // 1 day
-            sameSite: 'none',
-            secure: true
-        });
+//     try {
+//         // const user = await usermodel.create({ name, email, password });
+//         const token = generatetoken(userexists);
+//         res.cookie("token", token, {
+//             path: '/',
+//             httpOnly: true,
+//             expires: new Date(Date.now() + 1000 * 86400), // 1 day
+//             sameSite: 'none',
+//             secure: true
+//         });
         
-        // const {  phone, photo } = userexists; // Adjust fields as necessary
-        return res.status(201).json({});
+//         // const {  phone, photo } = userexists; // Adjust fields as necessary
+//         return res.status(201).json({});
         
-            // console.log(req.body); // Log the incoming request body
+//             // console.log(req.body); // Log the incoming request body
 
 
-    } catch (error) {
-        console.error("Error during user creation:", error);
-        return res.status(500).json({ msg: "Internal server error" });
-    }
-});
+//     } catch (error) {
+//         console.error("Error during user creation:", error);
+//         return res.status(500).json({ msg: "Internal server error" });
+//     }
+// });
 // Login user
 const loginuser = asynchandler(async (req, res) => {
     const {email, password} = req.body
@@ -176,9 +225,9 @@ const logout=asynchandler(async(req,res,next)=>{
 
 // getuser
 const getuser = asynchandler(async (req, res) => {
-    const user =await user.findById(req.user._id)
+    const user =await usermodel.findById(req.user._id)
     if (user) {
-        const { name, _id, email, phone, photo } = user
+        const { name, _id, email, phone, photo,bio } = user
         return res.status(200).json({
             name,
             _id,
@@ -215,7 +264,7 @@ const loggedenstatus =asynchandler(async(req,res)=>{
 
 const updateuser =asynchandler(async(req,res)=>{
 
-     const user =await user.findById(req.user._id)
+     const user =await usermodel.findById(req.user._id)
     if (user) {
         const { name, email, phone, photo ,bio} = user
         user.email=email;

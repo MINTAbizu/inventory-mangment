@@ -57,6 +57,7 @@ import SalesGraph from './pages/items/SalesGraph';
 import StatusGraph from './pages/items/StatusGraph ';
 import StatusPage from './pages/items/StatusPage';
 import Sales from './pages/items/sales/Sales.';
+import HomePage from './pages/HomePage';
 function App() {
     return (
         <StatusProvider>
@@ -64,7 +65,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
           <Route
             path="/dashboard"
             element={
@@ -73,13 +74,14 @@ function App() {
               // </ProtectedRoute>
             }
           />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/HomePage" replace />} />
           <Route path="/ItemRegisteration" element={<ItemRegisteration/>} />
-          <Route path="/Sidebar" element={<Sidebar/>} />
+          {/* <Route path="/Sidebar" element={<Sidebar/>} /> */}
           <Route path="/Items" element={<Items/>} />
           <Route path="/Additems" element={<Additems/>} />
           <Route path="/StatusPage" element={<StatusPage/>} />
           <Route path="/sales" element={<Sales/>} />
+          <Route path="/HomePage" element={<HomePage/>} />
         </Routes>
         
       </AuthProvider>

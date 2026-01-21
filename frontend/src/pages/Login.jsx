@@ -22,9 +22,10 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(formData);
-      navigate('/dashboard');
+      navigate('/Items');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.msg || 'Login failed');
+
     }
   };
 

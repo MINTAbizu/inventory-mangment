@@ -13,6 +13,6 @@ router.get('/getuser', protect, getuser)
 router.get('/loggden', loggedenstatus)
 router.patch('/updateuser',protect, updateuser)
 router.patch('/changepassword',protect, changepassword)
-router.post('/forgetpassword',protect,forgetpassword )
+router.post('/forgetpassword',forgetpassword )
 
 module.exports = router

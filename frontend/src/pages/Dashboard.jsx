@@ -69,7 +69,7 @@ const Dashboard = () => {
 
              <div className='main' style={{display:'flex'}}>
              <div>
-                <Sidebar/>
+                {/* <Sidebar/> */}
              </div>
 
                <div>
