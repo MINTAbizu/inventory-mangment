@@ -91,6 +91,25 @@ function Items() {
         return <div>Loading...</div>;
     }
 
+    const exportToExcel = () => {
+    const formattedData = items.map(item => ({
+        Name: item.name,
+        Category: item.category,
+        Unit: item.unit,
+        Cost: item.cost,
+        Quantity: item.quantity,
+        Status: item.status
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Items");
+
+    XLSX.writeFile(workbook, "Inventory_Items.xlsx");
+};
+
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -104,6 +123,10 @@ function Items() {
                             <Link to={'/Additems'}>
                                 <button className="btn btn-primary">+ Item</button>
                             </Link>
+
+                            <button className="btn btn-success ms-2" onClick={exportToExcel}>
+    Export to Excel
+</button>
                         </div>
 
                         <div className="table-responsive">
