@@ -54,6 +54,25 @@ function Items() {
         fetchItems();
     }, [setStatusData]);
 
+const exportToExcel = () => {
+    const formattedData = items.map(item => ({
+        Name: item.name,
+        Category: item.category,
+        Unit: item.unit,
+        Cost: item.cost,
+        Quantity: item.quantity,
+        Status: item.status
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Items");
+
+    XLSX.writeFile(workbook, "Inventory_Items.xlsx");
+};
+
+
     const handleDelete = async (itemId) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');
         if (confirmDelete) {
