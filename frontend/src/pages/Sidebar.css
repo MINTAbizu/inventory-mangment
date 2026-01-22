@@ -68,3 +68,28 @@ src/Sidebar.css
     background: rgba(0, 0, 0, 0.4);
     z-index: 1040;
 }
+
+
+.sidebar-container {
+  padding: 20px;
+  background: #fff;
+  height: 100%;
+}
+
+.sidebar-title {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  color: #000;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.sidebar-link:hover {
+  background: #f1f1f1;
+}

@@ -1,0 +1,74 @@
+/* Layout */
+.layout {
+  display: flex;
+  width: 100%;
+}
+
+/* Desktop Sidebar */
+.desktop-sidebar {
+  width: 260px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-sidebar {
+    display: block;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100vh;
+  background: #fff;
+  z-index: 999;
+  transition: left 0.3s ease;
+}
+
+.mobile-sidebar.open {
+  left: 0;
+}
+
+/* Overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 998;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  margin-left: 0;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    margin-left: 260px;
+  }
+}
+
+/* Mobile Header */
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.hamburger {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #fff;
+}
