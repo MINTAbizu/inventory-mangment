@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useDarkMode } from "../context/DarkModeContext";
 // import AuthModal from "../components/AuthModal";
 import homeimage from "../assets/home.jpg";
-import im2 from "../assets/dashboard1.jpg";
+// import im2 from "../assets/dashboard1.jpg";
 // import h from "../assets/dashboard3.jpg";
 // import h3 from "../assets/dashboard2.jpg";
 import h5 from "../assets/dashboard5.jpg";
@@ -23,9 +23,6 @@ import Navbar from "./NavBar";
 const mockScreens = [
     homeimage,
     im2,
-    
-   
-
     h5,
     h6
 
