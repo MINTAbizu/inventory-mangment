@@ -19,7 +19,7 @@ const AddItemForm = ({ onItemAdded }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/items/postitem', newItem);
+            const response = await axios.post('https://inventory-mangment-6.onrender.com/api/items/postitem', newItem);
             // onItemAdded(response.data); // Notify parent component
             setNewItem({ name: '', category: '', unit: '', cost: '', quantity: '', status: 'In-stock' });
             alert('Item added successfully');
