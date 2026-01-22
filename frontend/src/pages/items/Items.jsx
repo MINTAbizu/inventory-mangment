@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import * as XLSX from "xlsx";
-
+import './Items.css';
 function Items() {
   const { setStatusData } = useContext(StatusContext);
   const [items, setItems] = useState([]);
