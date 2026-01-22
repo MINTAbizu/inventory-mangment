@@ -9,7 +9,7 @@ const ItemRegisteration = () => {
 
     useEffect(() => {
         const fetchItems = async () => {
-            const response = await axios.get('http://localhost:5000/api/items');
+            const response = await axios.get('https://inventory-mangment-6.onrender.com/api/items');
             setItems(response.data);
         };
         fetchItems();
@@ -21,10 +21,10 @@ const ItemRegisteration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/api/items', newItem);
+        await axios.post('https://inventory-mangment-6.onrender.com/api/items', newItem);
         setNewItem({ name: '', category: '', unit: '', cost: '', quantity: '' }); // Reset form
         // Fetch updated items
-        const response = await axios.get('http://localhost:5000/api/items');
+        const response = await axios.get('https://inventory-mangment-6.onrender.com/api/items');
         setItems(response.data);
     };
 
