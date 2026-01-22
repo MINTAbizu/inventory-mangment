@@ -78,7 +78,7 @@ function App() {
           <Route path="/ItemRegisteration" element={<ItemRegisteration/>} />
           {/* <Route path="/Sidebar" element={<Sidebar/>} /> */}
           <Route path="/Items" element={<Items/>} />
-          <Route path="/Additems" element={<Additems/>} />
+          {/* <Route path="/Additems" element={<Additems/>} /> */}
           <Route path="/StatusPage" element={<StatusPage/>} />
           <Route path="/sales" element={<Sales/>} />
           <Route path="/HomePage" element={<HomePage/>} />
