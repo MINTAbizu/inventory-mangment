@@ -19,7 +19,7 @@ function Items() {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/items/getitem');
+                const response = await axios.get('https://inventory-mangment-6.onrender.com/api/items/getitem');
                 setItems(response.data);
                 aggregateStatus(response.data);
             } catch (error) {
@@ -58,7 +58,7 @@ function Items() {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');
         if (confirmDelete) {
             try {
-                await axios.delete(`http://localhost:5000/api/items/${itemId}`);
+                await axios.delete(`https://inventory-mangment-6.onrender.com/api/items/${itemId}`);
                 setItems(items.filter(item => item._id !== itemId));
                 alert('Item deleted successfully');
             } catch (error) {
