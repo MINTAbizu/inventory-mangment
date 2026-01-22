@@ -7,7 +7,7 @@ import { StatusContext } from '../../context/StatusContext';
 import { Link } from 'react-router-dom';
 import { ListItemIcon } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility'; // Import View Icon
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as XLSX from "xlsx";
 
 function Items() {
@@ -15,12 +15,14 @@ function Items() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; // Number of items per page
+    const itemsPerPage = 10;
 
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get('https://inventory-mangment-6.onrender.com/api/items/getitem');
+                const response = await axios.get(
+                    'https://inventory-mangment-6.onrender.com/api/items/getitem'
+                );
                 setItems(response.data);
                 aggregateStatus(response.data);
             } catch (error) {
@@ -48,50 +50,42 @@ function Items() {
                 case 'In-stock':
                     return 'In Stock';
                 default:
-                    return status; 
+                    return status;
             }
         };
 
         fetchItems();
     }, [setStatusData]);
 
-const exportToExcel = () => {
-    const formattedData = items.map(item => ({
-        Name: item.name,
-        Category: item.category,
-        Unit: item.unit,
-        Cost: item.cost,
-        Quantity: item.quantity,
-        Status: item.status
-    }));
+    // ✅ EXPORT TO EXCEL
+    const exportToExcel = () => {
+        const formattedData = items.map(item => ({
+            Name: item.name,
+            Category: item.category,
+            Unit: item.unit,
+            Cost: item.cost,
+            Quantity: item.quantity,
+            Status: item.status
+        }));
 
-    const worksheet = XLSX.utils.json_to_sheet(formattedData);
-    const workbook = XLSX.utils.book_new();
-
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Items");
-
-    XLSX.writeFile(workbook, "Inventory_Items.xlsx");
-};
-
-
-    const handleDelete = async (itemId) => {
-        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
-        if (confirmDelete) {
-            try {
-                await axios.delete(`https://inventory-mangment-6.onrender.com/api/items/${itemId}`);
-                setItems(items.filter(item => item._id !== itemId));
-                alert('Item deleted successfully');
-            } catch (error) {
-                console.error('Error deleting item:', error);
-                alert('Failed to delete the item');
-            }
-        }
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Items");
+        XLSX.writeFile(workbook, "Inventory_Items.xlsx");
     };
 
-    const handleView = (itemId) => {
-        // Handle view action here, e.g., navigate to a detailed view
-        console.log('View item with ID:', itemId);
-        // You can redirect or show a modal, etc.
+    // ✅ DELETE ITEM
+    const handleDelete = async (itemId) => {
+        if (!window.confirm('Are you sure you want to delete this item?')) return;
+
+        try {
+            await axios.delete(
+                `https://inventory-mangment-6.onrender.com/api/items/${itemId}`
+            );
+            setItems(items.filter(item => item._id !== itemId));
+        } catch (error) {
+            alert('Failed to delete item');
+        }
     };
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -99,37 +93,49 @@ const exportToExcel = () => {
     const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(items.length / itemsPerPage);
 
-    const nextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-    };
-
-    const prevPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
-
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-50">
+                <div className="spinner-border text-primary" />
+            </div>
+        );
     }
 
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-3">
+                {/* SIDEBAR */}
+                <div className="col-12 col-md-3 mb-3 mb-md-0">
                     <Sidebar />
                 </div>
-                <div className="col-md-9">
-                    <div className="item-categories">
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h1>Inventory Management</h1>
-                            <Link to={'/Additems'}>
-                                <button className="btn btn-primary">+ Item</button>
-                            </Link>
 
-                            <button className="btn btn-success ms-2" onClick={exportToExcel}>
-            Export to Excel
-        </button>
+                {/* MAIN CONTENT */}
+                <div className="col-12 col-md-9">
+                    <div className="item-categories">
+
+                        {/* HEADER */}
+                        <div className="d-flex flex-column flex-md-row justify-content-between gap-2 mb-3">
+                            <h2 className="text-center text-md-start">
+                                Inventory Management
+                            </h2>
+
+                            <div className="d-flex flex-column flex-sm-row gap-2">
+                                <Link to="/Additems">
+                                    <button className="btn btn-primary w-100">
+                                        + Item
+                                    </button>
+                                </Link>
+
+                                <button
+                                    className="btn btn-success w-100"
+                                    onClick={exportToExcel}
+                                >
+                                    Export to Excel
+                                </button>
+                            </div>
                         </div>
 
+                        {/* TABLE */}
                         <div className="table-responsive">
                             <table className="table table-striped table-hover">
                                 <thead className="table-light">
@@ -144,7 +150,7 @@ const exportToExcel = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentItems.map((item) => (
+                                    {currentItems.map(item => (
                                         <tr key={item._id}>
                                             <td>{item.name}</td>
                                             <td>{item.category}</td>
@@ -152,14 +158,21 @@ const exportToExcel = () => {
                                             <td>{item.cost}</td>
                                             <td>{item.quantity}</td>
                                             <td>{item.status}</td>
-                                            <td className='action'>
-                                                <button className="btn btn-primary" onClick={() => handleView(item._id)}>
-                                                    <VisibilityIcon /> View
+                                            <td className="d-flex flex-wrap gap-1">
+                                                <button className="btn btn-sm btn-primary">
+                                                    <VisibilityIcon fontSize="small" />
                                                 </button>
-                                                <button className="btn btn-danger" onClick={() => handleDelete(item._id)}>Delete</button>
-                                                <ListItemIcon>
-                                                    <EditIcon />
-                                                </ListItemIcon>
+
+                                                <button
+                                                    className="btn btn-sm btn-danger"
+                                                    onClick={() => handleDelete(item._id)}
+                                                >
+                                                    Delete
+                                                </button>
+
+                                                <button className="btn btn-sm btn-warning">
+                                                    <EditIcon fontSize="small" />
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -167,11 +180,29 @@ const exportToExcel = () => {
                             </table>
                         </div>
 
-                        <div className="pagination mt-3">
-                            <button onClick={prevPage} disabled={currentPage === 1} className="btn btn-secondary">Previous</button>
-                            <span className="mx-2">Page {currentPage} of {totalPages}</span>
-                            <button onClick={nextPage} disabled={currentPage === totalPages} className="btn btn-secondary">Next</button>
+                        {/* PAGINATION */}
+                        <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-2 mt-3">
+                            <button
+                                className="btn btn-secondary"
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                            >
+                                Previous
+                            </button>
+
+                            <span>
+                                Page {currentPage} of {totalPages}
+                            </span>
+
+                            <button
+                                className="btn btn-secondary"
+                                disabled={currentPage === totalPages}
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                            >
+                                Next
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>
