@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://inventory-mangment-6.onrender.com';
+const API_URL = 'https://inventory-mangment-6.onrender.com/api/user';
 
 // Create axios instance with default config
 const api = axios.create({
