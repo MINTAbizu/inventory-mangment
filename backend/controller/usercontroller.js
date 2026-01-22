@@ -2,7 +2,7 @@ const asynchandler = require('express-async-handler')
 const usermodel = require('../usermodel/usermodel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const crypto=require('crypto')
+// const crypto=require('crypto')
 
 const token=require('../usermodel/tokenmodel')
 // const sendEmail = require('../utils/sendemail.js')
@@ -407,5 +407,5 @@ module.exports = {
     loggedenstatus,
     updateuser,
     changepassword,
-    forgetpassword
+    // forgetpassword
 }
