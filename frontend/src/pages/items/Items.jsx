@@ -106,7 +106,7 @@ function Items() {
             <div className="row">
                 {/* SIDEBAR */}
                 <div className="col-12 col-md-3 mb-3 mb-md-0">
-                    <Sidebar />
+                    {/* <Sidebar /> */}
                 </div>
 
                 {/* MAIN CONTENT */}

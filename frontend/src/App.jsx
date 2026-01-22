@@ -77,7 +77,13 @@ function App() {
           <Route path="/" element={<Navigate to="/HomePage" replace />} />
           <Route path="/ItemRegisteration" element={<ItemRegisteration/>} />
           {/* <Route path="/Sidebar" element={<Sidebar/>} /> */}
-          <Route path="/Items" element={<Items/>} />
+          <Route path="/Items" element={
+            <Sidebar >
+            <Items/>
+
+            </Sidebar >
+            
+            } />
           <Route path="/Additems" element={<Additems/>} />
           <Route path="/StatusPage" element={<StatusPage/>} />
           <Route path="/sales" element={<Sales/>} />
