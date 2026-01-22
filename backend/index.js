@@ -18,7 +18,7 @@ app.use(cookieparser())
 
 // CORS configuration
 app.use(cors({
-    origin: 'https://implatform.netlify.app', // Vite's default port
+    origin: 'https://inventory-mangment-6.onrender.com', // Vite's default port
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
