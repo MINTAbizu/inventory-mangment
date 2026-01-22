@@ -104,6 +104,10 @@ function Items() {
                             <Link to={'/Additems'}>
                                 <button className="btn btn-primary">+ Item</button>
                             </Link>
+
+                            <button className="btn btn-success ms-2" onClick={exportToExcel}>
+            Export to Excel
+        </button>
                         </div>
 
                         <div className="table-responsive">

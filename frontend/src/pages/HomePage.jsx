@@ -22,7 +22,7 @@ import Navbar from "./NavBar";
 
 const mockScreens = [
     homeimage,
-    im2,
+    
     h5,
     h6
 
