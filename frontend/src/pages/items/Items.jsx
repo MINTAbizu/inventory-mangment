@@ -292,7 +292,7 @@ function Items() {
           disabled={page === totalPages}
           onClick={() => setPage(page + 1)}
         >
-          Next
+          Nextssssssssssssssssss
         </button>
       </div>
     </div>
