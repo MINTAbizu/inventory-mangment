@@ -172,7 +172,7 @@ const HomePage = () => {
               Login
             </button>
            </Link>
-            <Link to={'/register'}>
+            {/* <Link to={'/register'}>
             <button
               onClick={() => setAuthType("register")}
               className="px-8 py-3 rounded-md text-purple-600 bg-white border border-purple-600 hover:bg-purple-50 font-medium"
@@ -180,7 +180,7 @@ const HomePage = () => {
               Register
             </button>
             
-            </Link>
+            </Link> */}
           </div>
         </div>
 

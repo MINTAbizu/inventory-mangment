@@ -36,14 +36,14 @@ function Navbar({ darkMode, setDarkMode, setAuthType }) {
             </button>
           </Link>
 
-          <Link to="/register">
+          {/* <Link to="/register">
             <button
               onClick={() => setAuthType("register")}
               className="px-4 py-2 rounded-md text-sm font-medium text-white bg-purple-600 hover:bg-purple-700"
             >
               Register
             </button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Mobile Menu Button */}
