@@ -78,10 +78,10 @@ function App() {
           <Route path="/ItemRegisteration" element={<ItemRegisteration/>} />
           {/* <Route path="/Sidebar" element={<Sidebar/>} /> */}
           <Route path="/Items" element={
-            <Sidebar >
+            
             <Items/>
 
-            </Sidebar >
+           
             
             } />
           <Route path="/Additems" element={<Additems/>} />

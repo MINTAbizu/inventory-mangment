@@ -21,7 +21,7 @@ const Sidebar = () => {
                 position: 'fixed'
             }}
         >
-            <h2 style={{ textAlign: 'center' }}>Stock 360</h2>
+            <h2 style={{ textAlign: 'center' }}>Stock</h2>
             <Divider />
             <List>
                 <ListItem component={Link} to="/">

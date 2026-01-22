@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
-import Sidebar from '../Sidebar';
+// import Sidebar from '../Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './items.css';
 import { StatusContext } from '../../context/StatusContext';
