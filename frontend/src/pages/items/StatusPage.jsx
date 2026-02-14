@@ -11,7 +11,7 @@ const StatusPage = () => {
     return (
         <div className="container " style={{background:'white' ,height:'690px',color:'orange' }}>
             <h1>Item Status Overview</h1>
-            <StatusPieChart /> {/* Render the StatusGraph component */}
+            {/* <StatusPieChart /> Render the StatusGraph component */}
             <StatusTable /> {/* Render the StatusTable component */}
         </div>
     );
