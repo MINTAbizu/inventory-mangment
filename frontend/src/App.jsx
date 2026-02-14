@@ -94,7 +94,7 @@ function App() {
           {/* <Route path="/AdminInventory" element={<AdminInventory/>} /> */}
           {/* <Route path="/SupplierManagement" element={<SupplierManagement/>} /> */}
 
-          <Route path="/AnalyticsChart" element={<AnalyticsChart/>} />
+          {/* <Route path="/AnalyticsChart" element={<AnalyticsChart/>} /> */}
         </Routes>
         
       </AuthProvider>
