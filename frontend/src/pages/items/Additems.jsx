@@ -64,6 +64,7 @@ const AddItemForm = ({ onItemAdded }) => {
                 <button type="submit" className="btn btn-primary w-100">Add Item</button>
                 <Link to="/AdminInventory" className="btn btn-secondary w-100 mt-2">View Items</Link>
                 <Link to="/SupplierManagement" className="btn btn-secondary w-100 mt-2">View Suppliers</Link>
+                <Link to="/AnalyticsChart" className="btn btn-secondary w-100 mt-2">View Analytics</Link>
             </div>
         </form>
     );
