@@ -58,6 +58,7 @@ import StatusGraph from './pages/items/StatusGraph ';
 import StatusPage from './pages/items/StatusPage';
 import Sales from './pages/items/sales/Sales.';
 import HomePage from './pages/HomePage';
+import AdminInventory from './pages/Admin/AdminInventory ';
 function App() {
     return (
         <StatusProvider>
@@ -88,6 +89,7 @@ function App() {
           <Route path="/StatusPage" element={<StatusPage/>} />
           <Route path="/sales" element={<Sales/>} />
           <Route path="/HomePage" element={<HomePage/>} />
+          <Route path="/AdminInventory" element={<AdminInventory/>} />
         </Routes>
         
       </AuthProvider>
