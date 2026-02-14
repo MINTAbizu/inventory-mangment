@@ -91,7 +91,7 @@ function App() {
           <Route path="/StatusPage" element={<StatusPage/>} />
           <Route path="/sales" element={<Sales/>} />
           <Route path="/HomePage" element={<HomePage/>} />
-          <Route path="/AdminInventory" element={<AdminInventory/>} />
+          {/* <Route path="/AdminInventory" element={<AdminInventory/>} /> */}
           {/* <Route path="/SupplierManagement" element={<SupplierManagement/>} /> */}
 
           <Route path="/AnalyticsChart" element={<AnalyticsChart/>} />
