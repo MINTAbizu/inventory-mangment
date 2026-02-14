@@ -90,6 +90,7 @@ function App() {
           <Route path="/sales" element={<Sales/>} />
           <Route path="/HomePage" element={<HomePage/>} />
           <Route path="/AdminInventory" element={<AdminInventory/>} />
+          <Route path="/SupplierManagement" element={<SupplierManagement/>} />
         </Routes>
         
       </AuthProvider>
