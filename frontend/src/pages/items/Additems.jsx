@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const AddItemForm = ({ onItemAdded }) => {
     const [newItem, setNewItem] = useState({
@@ -61,7 +62,7 @@ const AddItemForm = ({ onItemAdded }) => {
             </div>
             <div className="col-12">
                 <button type="submit" className="btn btn-primary w-100">Add Item</button>
-                <Lin
+                <Link to="/AdminInventory" className="btn btn-secondary w-100 mt-2">View Items</Link>
             </div>
         </form>
     );
