@@ -92,6 +92,7 @@ function App() {
           <Route path="/HomePage" element={<HomePage/>} />
           <Route path="/AdminInventory" element={<AdminInventory/>} />
           <Route path="/SupplierManagement" element={<SupplierManagement/>} />
+          
           <Route path="/AnalyticsChart" element={<AnalyticsChart/>} />
         </Routes>
         
