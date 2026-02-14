@@ -60,6 +60,7 @@ import Sales from './pages/items/sales/Sales.';
 import HomePage from './pages/HomePage';
 import AdminInventory from './pages/Admin/AdminInventory ';
 import AnalyticsChart from './pages/Admin/AnalyticsChart';
+import SupplierManagement from './pages/Admin/SupplierManagement';
 function App() {
     return (
         <StatusProvider>
@@ -91,8 +92,8 @@ function App() {
           <Route path="/sales" element={<Sales/>} />
           <Route path="/HomePage" element={<HomePage/>} />
           <Route path="/AdminInventory" element={<AdminInventory/>} />
-          <Route path="/SupplierManagement" element={<SupplierManagement/>} />
-          
+          {/* <Route path="/SupplierManagement" element={<SupplierManagement/>} /> */}
+
           <Route path="/AnalyticsChart" element={<AnalyticsChart/>} />
         </Routes>
         
